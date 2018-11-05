@@ -1,7 +1,7 @@
 package com.google.firebase.auth;
 public class FirebaseAuth implements zzeku {
     public interface C1457a {
-        void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth);
+        void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth);             //interface
     }
     
 =================================================================================    
@@ -17,7 +17,7 @@ public final class dag implements Runnable {
 
     public final void run() {
         for (C1457a onAuthStateChanged : this.f20474a.f12021e) {
-            onAuthStateChanged.onAuthStateChanged(this.f20474a);
+            onAuthStateChanged.onAuthStateChanged(this.f20474a);      //caller
         }
     }
 }
@@ -37,7 +37,7 @@ public final class MarketplaceLogger$initLogger$1 implements C1457a {
         eig.m21366b(firebaseAuth, "auth");
         daa c = firebaseAuth.mo17420c();
         if (c != null) {
-            FirebaseAnalytics.getInstance(this.$context).setUserId(c.mo19447c());
+            FirebaseAnalytics.getInstance(this.$context).setUserId(c.mo19447c());      //caller
             this.$firebaseAuth.mo17418b((C1457a) this);
         }
     }
