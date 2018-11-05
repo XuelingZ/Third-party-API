@@ -37,7 +37,7 @@ public final class MarketplaceLogger$initLogger$1 implements C1457a {
         eig.m21366b(firebaseAuth, "auth");
         daa c = firebaseAuth.mo17420c();
         if (c != null) {
-            FirebaseAnalytics.getInstance(this.$context).setUserId(c.mo19447c());      //caller
+            FirebaseAnalytics.getInstance(this.$context).setUserId(c.mo19447c());      //involk
             this.$firebaseAuth.mo17418b((C1457a) this);
         }
     }
