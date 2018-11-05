@@ -1,7 +1,7 @@
 package com.google.firebase.auth;
 public class FirebaseAuth implements zzeku {
     public interface C1457a {
-        void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth);             //interface
+        void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth);             //interface  onAuthStateChanged
     }
     
 =================================================================================    
