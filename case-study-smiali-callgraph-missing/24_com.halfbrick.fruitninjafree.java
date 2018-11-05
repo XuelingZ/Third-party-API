@@ -22,7 +22,7 @@ public class Provider_AppsFlyerBackend {
         try {
             Log.d("halfbrick.Mortar.AppsFlyerBackend", "StartTracking> DeviceID  : " + str2);
             Log.d("halfbrick.Mortar.AppsFlyerBackend", "StartTracking> appKey    : " + str);
-            AppsFlyerLib.getInstance().setCustomerUserId(str2);                                   //  caller
+            AppsFlyerLib.getInstance().setCustomerUserId(str2);                                   //  invoke
             AppsFlyerLib.getInstance().startTracking(s_activity.getApplication(), str);
         } catch (Throwable th) {
             Log.e("halfbrick.Mortar.AppsFlyerBackend", "StartTracking> Failed to initialise AppsFlyer SDK");
