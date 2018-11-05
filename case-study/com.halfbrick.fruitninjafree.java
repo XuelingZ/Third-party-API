@@ -5,14 +5,14 @@ public class Provider_AppsFlyerBackend {
     
     public static void onCreate() {
         String GetAppKey = GetAppKey();
-        String GetDeviceID = GetDeviceID();
+        String GetDeviceID = GetDeviceID();                                                // parameter
         if (GetAppKey == null || GetAppKey.equals("")) {
             Log.e("halfbrick.Mortar.AppsFlyerBackend", "onCreate> AppKey not found.");
         } else if (GetDeviceID == null || GetDeviceID.equals("")) {
             Log.e("halfbrick.Mortar.AppsFlyerBackend", "onCreate> DeviceID not found.");
         } else {
             Log.d("halfbrick.Mortar.AppsFlyerBackend", "onCreate> Initializing...");
-            StartTracking(GetAppKey, GetDeviceID);
+            StartTracking(GetAppKey, GetDeviceID);                           //   caller
         }
     }
     
@@ -22,7 +22,7 @@ public class Provider_AppsFlyerBackend {
         try {
             Log.d("halfbrick.Mortar.AppsFlyerBackend", "StartTracking> DeviceID  : " + str2);
             Log.d("halfbrick.Mortar.AppsFlyerBackend", "StartTracking> appKey    : " + str);
-            AppsFlyerLib.getInstance().setCustomerUserId(str2);
+            AppsFlyerLib.getInstance().setCustomerUserId(str2);                                   //  caller
             AppsFlyerLib.getInstance().startTracking(s_activity.getApplication(), str);
         } catch (Throwable th) {
             Log.e("halfbrick.Mortar.AppsFlyerBackend", "StartTracking> Failed to initialise AppsFlyer SDK");
@@ -31,4 +31,14 @@ public class Provider_AppsFlyerBackend {
         }
     }
     
-    ===============================================
+     private static String GetDeviceID() {
+        return NativeGameLib.GetDeviceID();
+    }
+    
+    =======================================================================================================
+package com.halfbrick.mortar;
+public class NativeGameLib {
+    private static native String native_GetDeviceID();      // parameter, native interfacce   
+        
+        
+        
