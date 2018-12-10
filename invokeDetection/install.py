@@ -42,7 +42,9 @@ def startApk(packageName):
     print getCmdEexcuteResult(cmd)
 
 def installApk(name):
-    cmd='adb  install -r "%s"'%name
+    print name
+    cmd='./adb  install -r "%s"'%name
+    os.chdir("/Users/xueling/Library/Android/sdk/platform-tools")
     os.system(cmd)
 
 def uninstallApk(packageName):
@@ -73,7 +75,7 @@ def cpuinfoLog(fileName,index):
 def rank(apkNameList,index):
     packageNameList=[]
     print "the %dth"%index
-    #安装10apk
+    #install 10apk
     for apkName in apkNameList:
         print "%s installing"%apkName
         print "%s install  " % apkName ,
@@ -117,12 +119,12 @@ def rank(apkNameList,index):
     print "all done"
 
 def doWork():
-    apkNameList=[]
-    apkNameList10N=[]
+    apkNameList=[]       # complete list
+    apkNameList10N=[]        # 10 apks
 
 
     s = os.sep
-    root = os.getcwd()
+    root = os.getcwd()  # current work directory
     count = 0
     for i in os.listdir(root):
         if os.path.isfile(os.path.join(root, i)):
@@ -131,13 +133,14 @@ def doWork():
                 apkName = i
                 apkNameList10N.append(apkName)
                 if count==10:
-                    apkNameList.append(apkNameList10N)
+                    apkNameList.append(apkNameList10N)         #apkNameList -- complete list
                     apkNameList10N=[]
+                    print apkNameList10N
                     count=0
 
     index=1
-    for apkNameList10N in apkNameList:
-
+    for apkNameList10N in apkNameList:    #rank every 10 apks
+        print apkNameList10N
         rank(apkNameList10N,index)
         index += 1
 
