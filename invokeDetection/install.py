@@ -1,8 +1,11 @@
+
 #coding=utf-8
 #adb install Babe.apk
 #aapt dump badging Babe.apk  | findstr "package"
 import os
 import time
+apkPath = "/Users/xueling/Desktop/anonymous/invokeDetection/apk/"
+
 def getCmdEexcuteResult(cmd):
     tmp = os.popen(cmd).readlines()
     return tmp
@@ -43,7 +46,8 @@ def startApk(packageName):
 
 def installApk(name):
     print name
-    cmd='./adb  install -r "%s"'%name
+    name = apkPath + name
+    cmd='./adb  install "%s"' %name
     os.chdir("/Users/xueling/Library/Android/sdk/platform-tools")
     os.system(cmd)
 
@@ -73,12 +77,12 @@ def cpuinfoLog(fileName,index):
     outputLog(cmd,"fileName",index)
 
 def rank(apkNameList,index):
+    print "under rank()"
     packageNameList=[]
-    print "the %dth"%index
+    print "the %dth batch"%index
     #install 10apk
     for apkName in apkNameList:
         print "%s installing"%apkName
-        print "%s install  " % apkName ,
         installApk(apkName)
         writeFile("apkInstalled.log",apkName)
     writeFile("apkInstalled.log", "************************")
@@ -119,30 +123,37 @@ def rank(apkNameList,index):
     print "all done"
 
 def doWork():
+    print "under doWork()"
     apkNameList=[]       # complete list
     apkNameList10N=[]        # 10 apks
 
 
     s = os.sep
-    root = os.getcwd()  # current work directory
+    # root = os.getcwd()  # current work directory
     count = 0
-    for i in os.listdir(root):
-        if os.path.isfile(os.path.join(root, i)):
+    for i in os.listdir(apkPath):
+        if os.path.isfile(os.path.join(apkPath, i)):
             if i[-4:] == '.apk':
-                count+=1
+
                 apkName = i
-                apkNameList10N.append(apkName)
-                if count==10:
-                    apkNameList.append(apkNameList10N)         #apkNameList -- complete list
-                    apkNameList10N=[]
-                    print apkNameList10N
-                    count=0
+                apkNameList.append(apkName)
+                #
+                #
+                #     apkNameList.append(apkNameList10N)         #apkNameList -- complete list
+                #     apkNameList10N=[]
+                #     print apkNameList10N
+                #     count=0
 
     index=1
-    for apkNameList10N in apkNameList:    #rank every 10 apks
-        print apkNameList10N
-        rank(apkNameList10N,index)
-        index += 1
+    print apkNameList
+
+    for apkName in apkNameList:
+        apkNameList10N.append(apkName)
+        count+=1
+        if count%10 == 0:
+            print apkNameList10N
+            rank(apkNameList10N, index)            #rank every 10 apks
+            index += 1
 
 
 
@@ -151,6 +162,6 @@ if __name__=="__main__":
     packageNameListALL = []
     doWork()
     console=raw_input("delete all apk,enter y")
-    if console=='y':
+    if console =='y':
         for packageName in packageNameListALL:
             uninstallApk(packageName)
