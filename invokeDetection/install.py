@@ -1,10 +1,10 @@
-
 #coding=utf-8
 #adb install Babe.apk
 #aapt dump badging Babe.apk  | findstr "package"
 import os
 import time
-apkPath = "/Users/xueling/Desktop/anonymous/invokeDetection/apk/"
+apkPath = "/home/xueling/apkAnalysis/invokeDetection/apks/"
+platformPath = "/home/xueling/Android/Sdk/platform-tools"
 
 def getCmdEexcuteResult(cmd):
     tmp = os.popen(cmd).readlines()
@@ -48,7 +48,7 @@ def installApk(name):
     print name
     name = apkPath + name
     cmd='./adb  install "%s"' %name
-    os.chdir("/Users/xueling/Library/Android/sdk/platform-tools")
+    os.chdir(platformPath)
     os.system(cmd)
 
 def uninstallApk(packageName):
@@ -80,7 +80,7 @@ def rank(apkNameList,index):
     print "under rank()"
     packageNameList=[]
     print "the %dth batch"%index
-    #install 10apk
+   # install 10apk
     for apkName in apkNameList:
         print "%s installing"%apkName
         installApk(apkName)
@@ -90,7 +90,7 @@ def rank(apkNameList,index):
     # 获取包名和主界面名
     for apkName in apkNameList:
         packageName = getPackageName(apkName)
-        print packageName
+        print "packageName: " + packageName
         writeFile("apkInstalledPackageName.log",packageName)
         packageNameList.append(packageName)
         packageNameListALL.append(packageName)
@@ -129,21 +129,12 @@ def doWork():
 
 
     s = os.sep
-    # root = os.getcwd()  # current work directory
     count = 0
     for i in os.listdir(apkPath):
         if os.path.isfile(os.path.join(apkPath, i)):
             if i[-4:] == '.apk':
-
                 apkName = i
                 apkNameList.append(apkName)
-                #
-                #
-                #     apkNameList.append(apkNameList10N)         #apkNameList -- complete list
-                #     apkNameList10N=[]
-                #     print apkNameList10N
-                #     count=0
-
     index=1
     print apkNameList
 
@@ -154,9 +145,6 @@ def doWork():
             print apkNameList10N
             rank(apkNameList10N, index)            #rank every 10 apks
             index += 1
-
-
-
 
 if __name__=="__main__":
     packageNameListALL = []
