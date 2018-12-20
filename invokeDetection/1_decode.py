@@ -49,4 +49,11 @@ def decompile():
         # # os.system(cmd)
 
 
-decompile()
+# decompile()
+
+#move to library name
+for line in open("/home/xueling/apkAnalysis/invokeDetection/mixpanel/smaliName").readlines():
+    line = line.strip() + ".apk"
+    cmd = "mv %s%s %s" %(smaliPath, line, "/home/xueling/apkAnalysis/invokeDetection/mixpanel/")
+    print cmd
+    os.system(cmd)
