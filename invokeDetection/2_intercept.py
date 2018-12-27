@@ -66,20 +66,44 @@ import os
 
 
 
-# #=================================================Leanplum.setDeviceId==========================   5
-decodeFilePath = "/home/xueling/apkAnalysis/invokeDetection/decodeFile/leanplum.setDeviceId/"
-APIfileName = "Leanplum.smali"
-APIname = ".method public static setDeviceId(Ljava/lang/String;)V"
+#===================================crashlytics.setUserEmail / setUserIdentifier /setUserName ================= 5 6 7
+# decodeFilePath = "/home/xueling/apkAnalysis/invokeDetection/decodeFile/leanplum.setDeviceId/"  #ubuntu
+decodeFilePath = "/Users/xueling/Desktop/anonymous/invokeDetection/apk/" # mac
+APIfileName = "Crashlytics.smali"
+APIname_1 = ".method public static setUserEmail(Ljava/lang/String;)V"
+APIname_2 = ".method public static setUserIdentifier(Ljava/lang/String;)V"
+APIname_3 = ".method public static setUserName(Ljava/lang/String;)V"
 
 locals_org = "locals"
-locals_new = "    .locals 6"
-targetStatement = "locals"
-text_toBeAdd = " \
-    new-instance v4, Ljava/lang/Exception; \n \
-    const-string v5, \"Xueling:printTrace with parameter:\"\n \
-    invoke-direct {v4,v5}, Ljava/lang/Exception;-><init>(Ljava/lang/String;)V\n \
-    invoke-virtual {v4}, Ljava/lang/Exception;->printStackTrace()V\n \
-    invoke-static{v5, p0},Landroid/util/Log;->i(Ljava/lang/String;Ljava/lang/String;)I"
+locals_new_1 = "    .locals 3"
+locals_new_2 = "    .locals 3"
+locals_new_3 = "    .locals 3"
+
+targetStatement_1 = "Lcom/crashlytics/android/core/CrashlyticsCore;->setUserEmail(Ljava/lang/String;)V"
+targetStatement_2 = "Lcom/crashlytics/android/core/CrashlyticsCore;->setUserIdentifier(Ljava/lang/String;)V"
+targetStatement_3 = "Lcom/crashlytics/android/core/CrashlyticsCore;->setUserName(Ljava/lang/String;)V"
+
+text_toBeAdd_1 = " \
+    new-instance v1, Ljava/lang/Exception; \n \
+    const-string v2, \"Xueling:printTrace with parameter:\"\n \
+    invoke-direct {v1,v2}, Ljava/lang/Exception;-><init>(Ljava/lang/String;)V\n \
+    invoke-virtual {v1}, Ljava/lang/Exception;->printStackTrace()V\n \
+    invoke-static{v2, p0},Landroid/util/Log;->i(Ljava/lang/String;Ljava/lang/String;)I"
+
+text_toBeAdd_2 = " \
+    new-instance v1, Ljava/lang/Exception; \n \
+    const-string v2, \"Xueling:printTrace with parameter:\"\n \
+    invoke-direct {v1,v2}, Ljava/lang/Exception;-><init>(Ljava/lang/String;)V\n \
+    invoke-virtual {v1}, Ljava/lang/Exception;->printStackTrace()V\n \
+    invoke-static{v2, p0},Landroid/util/Log;->i(Ljava/lang/String;Ljava/lang/String;)I"
+
+
+text_toBeAdd_3 = " \
+    new-instance v1, Ljava/lang/Exception; \n \
+    const-string v2, \"Xueling:printTrace with parameter:\"\n \
+    invoke-direct {v1,v2}, Ljava/lang/Exception;-><init>(Ljava/lang/String;)V\n \
+    invoke-virtual {v1}, Ljava/lang/Exception;->printStackTrace()V\n \
+    invoke-static{v2, p0},Landroid/util/Log;->i(Ljava/lang/String;Ljava/lang/String;)I"
 
 count = 0
 def generateNewAPIfile(decodeFile):
@@ -112,40 +136,85 @@ def generateNewAPIfile(decodeFile):
 
     for line in text_org:
         index += 1
-        if APIname in line:              # locate the API method
+
+# APIname_1
+        if APIname_1 in line:              # locate the API method
             flag = 1
-            print "APIname : %d" %index
+            print "%s : %d" %(APIname_1, index)
             text_part1.append(line)
             continue
 
         if flag == 1 and locals_org in line:    # change the locals
-            text_part1.append(locals_new)
+            text_part1.append(locals_new_1)
             print "locals: %d" %index
-            if locals_org in targetStatement:                     # locals is the place to insert
-                text_part1.append(text_toBeAdd)
+            if locals_org in targetStatement_1:                     # locals is the place to insert
+                text_part1.append(text_toBeAdd_1)
                 continue
             continue
 
-        if flag == 1 and targetStatement in line:       # the place to insert
+        if flag == 1 and targetStatement_1 in line:       # the place to insert
             text_part1.append(line)
-            text_part1.append(text_toBeAdd)
+            text_part1.append(text_toBeAdd_1)
             flag = 0
-            flag_goPart2 = 1
-            print "target %d" %index
+            # flag_goPart2 = 1
+            print "target 1: %d" %index
+            continue
+# second API
+        if APIname_2 in line:              # locate the API method
+            flag = 2
+            print "%s : %d" %(APIname_2, index)
+            text_part1.append(line)
             continue
 
-        if flag_goPart2 == 1:
-            text_part2.append(line)
+        if flag == 2 and locals_org in line:    # change the locals
+            text_part1.append(locals_new_2)
+            print "locals: %d" %index
+            if locals_org in targetStatement_2:                     # locals is the place to insert
+                text_part1.append(text_toBeAdd_2)
+                continue
+            continue
+
+        if flag == 2 and targetStatement_2 in line:       # the place to insert
+            text_part1.append(line)
+            text_part1.append(text_toBeAdd_2)
+            flag = 0
+            # flag_goPart2 = 1
+            print "target 2: %d" %index
+            continue
+
+        # else:
+        #     text_part1.append(line)
+
+# API_3
+        if APIname_3 in line:  # locate the API method
+            flag = 3
+            print "%s : %d" % (APIname_3, index)
+            text_part1.append(line)
+            continue
+
+        if flag == 3 and locals_org in line:  # change the locals
+            text_part1.append(locals_new_3)
+            print "locals: %d" % index
+            if locals_org in targetStatement_3:  # locals is the place to insert
+                text_part1.append(text_toBeAdd_3)
+                continue
+            continue
+
+        if flag == 3 and targetStatement_3 in line:  # the place to insert
+            text_part1.append(line)
+            text_part1.append(text_toBeAdd_3)
+            flag = 0
+            # flag_goPart2 = 1
+            print "target 3: %d" % index
+            continue
 
         else:
             text_part1.append(line)
 
-    text_new = text_part1 + text_part2
     APIfile.close()
-
     os.rename(APIfilePath, APIfilePath + "_bak")
     fw = open(APIfilePath, 'w+')
-    for line in text_new:
+    for line in text_part1:
         fw.write(line + '\n')
 
 def intercept():
