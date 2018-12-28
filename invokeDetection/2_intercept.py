@@ -67,8 +67,8 @@ import os
 
 
 #===================================crashlytics.setUserEmail / setUserIdentifier /setUserName ================= 5 6 7
-# decodeFilePath = "/home/xueling/apkAnalysis/invokeDetection/decodeFile/leanplum.setDeviceId/"  #ubuntu
-decodeFilePath = "/Users/xueling/Desktop/anonymous/invokeDetection/apk/" # mac
+decodeFilePath = "/home/xueling/apkAnalysis/invokeDetection/decodeFile/crashlytics/300/"  #ubuntu
+# decodeFilePath = "/Users/xueling/Desktop/anonymous/invokeDetection/apk/" # mac
 APIfileName = "Crashlytics.smali"
 APIname_1 = ".method public static setUserEmail(Ljava/lang/String;)V"
 APIname_2 = ".method public static setUserIdentifier(Ljava/lang/String;)V"
@@ -233,23 +233,31 @@ def redo():
         else:
             cmd = "find %s -iname \"%s\" " % (decodeFilePath + file, APIfileName)
             print cmd + ".................."
-            path = os.popen(cmd).readlines()
-            print path
-            if path:
-                APIfilePath = path[0].strip()
-                os.remove(APIfilePath)
-                cmd = "find %s -iname \"%s\" " % (decodeFilePath + file, APIfileName + "_bak")
-                print cmd + "................."
+            path_smali = os.popen(cmd).readlines()
 
-                path = os.popen(cmd).readlines()
-                print path
-                if path:
-                    APIfilePath_bak = path[0].strip()
-                    os.rename(APIfilePath_bak, APIfilePath)
-                else:
-                    print ".smali_bak No found! "
+            cmd = "find %s -iname \"%s\" " % (decodeFilePath + file, APIfileName + "_bak")
+            path_bak = os.popen(cmd).readlines()
+
+            print path_smali
+            print path_bak
+            if path_smali and path_bak:
+                APIfilePath_smali = path_smali[0].strip()
+                APIfilePath_bak = path_bak[0].strip()
+
+                os.remove(APIfilePath_smali)
+                os.rename(APIfilePath_bak, APIfilePath_smali)
+                # cmd = "find %s -iname \"%s\" " % (decodeFilePath + file, APIfileName + "_bak")
+                # print cmd + "................."
+
+                # path = os.popen(cmd).readlines()
+                # print path
+                # if path:
+                #     APIfilePath_bak = path[0].strip()
+
+                # else:
+                #     print ".smali_bak No found! "
             else:
-                print ".smali No found! "
+                print ".smali or bak No found! "
 
 
 # redo()

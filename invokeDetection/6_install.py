@@ -3,7 +3,7 @@
 
 import os
 import time
-apk_signedPath = "/home/xueling/apkAnalysis/invokeDetection/apk_signed/mixpanel/"
+apk_signedPath = "/home/xueling/apkAnalysis/invokeDetection/apk_signed/crashlytics/100/100/"
 platformPath = "/home/xueling/Android/Sdk/platform-tools"
 packageNameListALL = []
 apkNameList = []

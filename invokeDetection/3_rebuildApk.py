@@ -1,7 +1,7 @@
 
 import os
-rebuildApkPath = "/home/xueling/apkAnalysis/invokeDetection/rebuildApk/leanplum.setUserAttributes/"
-decodeFilePath = "/home/xueling/apkAnalysis/invokeDetection/decodeFile/leanplum.setUserAttributes/"
+rebuildApkPath = "/home/xueling/apkAnalysis/invokeDetection/rebuildApk/crashlytics/300/"
+decodeFilePath = "/home/xueling/apkAnalysis/invokeDetection/decodeFile/crashlytics/300/"
 apkNameList = []
 
 # for line in open("/home/xueling/apkAnalysis/invokeDetection/apkName_1007").readlines():

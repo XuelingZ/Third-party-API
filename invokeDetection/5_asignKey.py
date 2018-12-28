@@ -4,8 +4,8 @@ import sys
 import os
 
 keyPath = "/home/xueling/apkAnalysis/invokeDetection/keys/"
-apk_signedPath = "/home/xueling/apkAnalysis/invokeDetection/apk_signed/leanplum.setUserAttributes/"
-rebuildApkPath = "/home/xueling/apkAnalysis/invokeDetection/rebuildApk/leanplum.setUserAttributes/"
+apk_signedPath = "/home/xueling/apkAnalysis/invokeDetection/apk_signed/crashlytics/200/"
+rebuildApkPath = "/home/xueling/apkAnalysis/invokeDetection/rebuildApk/crashlytics/200/"
 apkNameList = []
 #
 # for line in open("/home/xueling/apkAnalysis/invokeDetection/apkName_1007").readlines():

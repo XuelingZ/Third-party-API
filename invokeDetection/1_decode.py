@@ -6,7 +6,7 @@ import os
 APKpath = "/home/xueling/apkAnalysis/APK/"
 apkPath = "/home/xueling/apkAnalysis/invokeDetection/apks/"
 smaliPath = "/home/xueling/apkAnalysis/invokeDetection/smalis/"
-decodeFilePath = "/home/xueling/apkAnalysis/invokeDetection/decodeFile/leanplum.setUserAttributes/"
+decodeFilePath = "/home/xueling/apkAnalysis/invokeDetection/decodeFile/crashlytics/"
 keyPath = "/home/xueling/apkAnalysis/invokeDetection/keys/"
 rebuildApkPath = "/home/xueling/apkAnalysis/invokeDetection/rebuildApk/"
 apk_signedPath = "/home/xueling/apkAnalysis/invokeDetection/apk_signed/"
@@ -17,7 +17,7 @@ apkNameList = []
 def decode():
     # get apkNamelist_1007
     # for line in open("/home/xueling/apkAnalysis/invokeDetection/apkName_1007").readlines():
-    for line in open("/home/xueling/apkAnalysis/invokeDetection/decodeFile/nameList/leanplum.setUserAttributes").readlines():
+    for line in open("/home/xueling/apkAnalysis/invokeDetection/decodeFile/nameList/crashlytics").readlines():
         line = line.strip() + ".apk"
         apkNameList.append(line)
     print len(apkNameList)
@@ -50,11 +50,11 @@ def decode():
         # # os.system(cmd)
 
 
-decode()
+# decode()
 
-# # move to library name
-# for line in open("/home/xueling/apkAnalysis/invokeDetection/decodeFile/nameList/leanplum.setUserAttributes").readlines():
-#     line = line.strip() + ".apk"
-#     cmd = "mv %s%s %s" %(smaliPath, line, "/home/xueling/apkAnalysis/invokeDetection/decodeFile/leanplum.setUserAttributes/")
-#     print cmd
-#     os.system(cmd)
+# move to library name
+for line in open("/home/xueling/apkAnalysis/invokeDetection/decodeFile/nameList/crashlytics").readlines():
+    line = line.strip() + ".apk"
+    cmd = "mv %s%s %s" %(smaliPath, line, decodeFilePath)
+    print cmd
+    os.system(cmd)
