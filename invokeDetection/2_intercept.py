@@ -67,40 +67,58 @@ import os
 
 
 #===================================crashlytics.setUserEmail / setUserIdentifier /setUserName ================= 5 6 7
-decodeFilePath = "/home/xueling/apkAnalysis/invokeDetection/decodeFile/crashlytics/300/"  #ubuntu
-# decodeFilePath = "/Users/xueling/Desktop/anonymous/invokeDetection/apk/" # mac
-APIfileName = "Crashlytics.smali"
-APIname_1 = ".method public static setUserEmail(Ljava/lang/String;)V"
-APIname_2 = ".method public static setUserIdentifier(Ljava/lang/String;)V"
-APIname_3 = ".method public static setUserName(Ljava/lang/String;)V"
+# decodeFilePath = "/home/xueling/apkAnalysis/invokeDetection/decodeFile/crashlytics/300/"  #ubuntu
+# # decodeFilePath = "/Users/xueling/Desktop/anonymous/invokeDetection/apk/" # mac
+# APIfileName = "Crashlytics.smali"
+# APIname_1 = ".method public static setUserEmail(Ljava/lang/String;)V"
+# APIname_2 = ".method public static setUserIdentifier(Ljava/lang/String;)V"
+# APIname_3 = ".method public static setUserName(Ljava/lang/String;)V"
+#
+# locals_org = "locals"
+# locals_new_1 = "    .locals 3"
+# locals_new_2 = "    .locals 3"
+# locals_new_3 = "    .locals 3"
+#
+# targetStatement_1 = "Lcom/crashlytics/android/core/CrashlyticsCore;->setUserEmail(Ljava/lang/String;)V"
+# targetStatement_2 = "Lcom/crashlytics/android/core/CrashlyticsCore;->setUserIdentifier(Ljava/lang/String;)V"
+# targetStatement_3 = "Lcom/crashlytics/android/core/CrashlyticsCore;->setUserName(Ljava/lang/String;)V"
+#
+# text_toBeAdd_1 = " \
+#     new-instance v1, Ljava/lang/Exception; \n \
+#     const-string v2, \"Xueling:printTrace with parameter:\"\n \
+#     invoke-direct {v1,v2}, Ljava/lang/Exception;-><init>(Ljava/lang/String;)V\n \
+#     invoke-virtual {v1}, Ljava/lang/Exception;->printStackTrace()V\n \
+#     invoke-static{v2, p0},Landroid/util/Log;->i(Ljava/lang/String;Ljava/lang/String;)I"
+#
+# text_toBeAdd_2 = " \
+#     new-instance v1, Ljava/lang/Exception; \n \
+#     const-string v2, \"Xueling:printTrace with parameter:\"\n \
+#     invoke-direct {v1,v2}, Ljava/lang/Exception;-><init>(Ljava/lang/String;)V\n \
+#     invoke-virtual {v1}, Ljava/lang/Exception;->printStackTrace()V\n \
+#     invoke-static{v2, p0},Landroid/util/Log;->i(Ljava/lang/String;Ljava/lang/String;)I"
+#
+#
+# text_toBeAdd_3 = " \
+#     new-instance v1, Ljava/lang/Exception; \n \
+#     const-string v2, \"Xueling:printTrace with parameter:\"\n \
+#     invoke-direct {v1,v2}, Ljava/lang/Exception;-><init>(Ljava/lang/String;)V\n \
+#     invoke-virtual {v1}, Ljava/lang/Exception;->printStackTrace()V\n \
+#     invoke-static{v2, p0},Landroid/util/Log;->i(Ljava/lang/String;Ljava/lang/String;)I"
 
+
+
+#==================================================== com.amplitude.api.AmplitudeClient.setUserId ==================== 8
+# decodeFilePath = "/home/xueling/apkAnalysis/invokeDetection/decodeFile/crashlytics/300/"  #ubuntu
+decodeFilePath = "/Users/xueling/Desktop/anonymous/invokeDetection/apk/" # mac
+APIfileName = "Amplitude.smali"
+APIname_1 = ".method public static setUserId(Ljava/lang/String;)V"
 locals_org = "locals"
 locals_new_1 = "    .locals 3"
-locals_new_2 = "    .locals 3"
-locals_new_3 = "    .locals 3"
-
-targetStatement_1 = "Lcom/crashlytics/android/core/CrashlyticsCore;->setUserEmail(Ljava/lang/String;)V"
-targetStatement_2 = "Lcom/crashlytics/android/core/CrashlyticsCore;->setUserIdentifier(Ljava/lang/String;)V"
-targetStatement_3 = "Lcom/crashlytics/android/core/CrashlyticsCore;->setUserName(Ljava/lang/String;)V"
+targetStatement_1 = "Lcom/amplitude/api/AmplitudeClient;->setUserId(Ljava/lang/String;)Lcom/amplitude/api/AmplitudeClient"
 
 text_toBeAdd_1 = " \
     new-instance v1, Ljava/lang/Exception; \n \
-    const-string v2, \"Xueling:printTrace with parameter:\"\n \
-    invoke-direct {v1,v2}, Ljava/lang/Exception;-><init>(Ljava/lang/String;)V\n \
-    invoke-virtual {v1}, Ljava/lang/Exception;->printStackTrace()V\n \
-    invoke-static{v2, p0},Landroid/util/Log;->i(Ljava/lang/String;Ljava/lang/String;)I"
-
-text_toBeAdd_2 = " \
-    new-instance v1, Ljava/lang/Exception; \n \
-    const-string v2, \"Xueling:printTrace with parameter:\"\n \
-    invoke-direct {v1,v2}, Ljava/lang/Exception;-><init>(Ljava/lang/String;)V\n \
-    invoke-virtual {v1}, Ljava/lang/Exception;->printStackTrace()V\n \
-    invoke-static{v2, p0},Landroid/util/Log;->i(Ljava/lang/String;Ljava/lang/String;)I"
-
-
-text_toBeAdd_3 = " \
-    new-instance v1, Ljava/lang/Exception; \n \
-    const-string v2, \"Xueling:printTrace with parameter:\"\n \
+    const-string v2, \"Third-party API invoke detection:Print StackTrace with parameter:\"\n \
     invoke-direct {v1,v2}, Ljava/lang/Exception;-><init>(Ljava/lang/String;)V\n \
     invoke-virtual {v1}, Ljava/lang/Exception;->printStackTrace()V\n \
     invoke-static{v2, p0},Landroid/util/Log;->i(Ljava/lang/String;Ljava/lang/String;)I"
@@ -159,54 +177,54 @@ def generateNewAPIfile(decodeFile):
             # flag_goPart2 = 1
             print "target 1: %d" %index
             continue
-# second API
-        if APIname_2 in line:              # locate the API method
-            flag = 2
-            print "%s : %d" %(APIname_2, index)
-            text_part1.append(line)
-            continue
-
-        if flag == 2 and locals_org in line:    # change the locals
-            text_part1.append(locals_new_2)
-            print "locals: %d" %index
-            if locals_org in targetStatement_2:                     # locals is the place to insert
-                text_part1.append(text_toBeAdd_2)
-                continue
-            continue
-
-        if flag == 2 and targetStatement_2 in line:       # the place to insert
-            text_part1.append(line)
-            text_part1.append(text_toBeAdd_2)
-            flag = 0
-            # flag_goPart2 = 1
-            print "target 2: %d" %index
-            continue
-
-        # else:
-        #     text_part1.append(line)
-
-# API_3
-        if APIname_3 in line:  # locate the API method
-            flag = 3
-            print "%s : %d" % (APIname_3, index)
-            text_part1.append(line)
-            continue
-
-        if flag == 3 and locals_org in line:  # change the locals
-            text_part1.append(locals_new_3)
-            print "locals: %d" % index
-            if locals_org in targetStatement_3:  # locals is the place to insert
-                text_part1.append(text_toBeAdd_3)
-                continue
-            continue
-
-        if flag == 3 and targetStatement_3 in line:  # the place to insert
-            text_part1.append(line)
-            text_part1.append(text_toBeAdd_3)
-            flag = 0
-            # flag_goPart2 = 1
-            print "target 3: %d" % index
-            continue
+# # second API
+#         if APIname_2 in line:              # locate the API method
+#             flag = 2
+#             print "%s : %d" %(APIname_2, index)
+#             text_part1.append(line)
+#             continue
+#
+#         if flag == 2 and locals_org in line:    # change the locals
+#             text_part1.append(locals_new_2)
+#             print "locals: %d" %index
+#             if locals_org in targetStatement_2:                     # locals is the place to insert
+#                 text_part1.append(text_toBeAdd_2)
+#                 continue
+#             continue
+#
+#         if flag == 2 and targetStatement_2 in line:       # the place to insert
+#             text_part1.append(line)
+#             text_part1.append(text_toBeAdd_2)
+#             flag = 0
+#             # flag_goPart2 = 1
+#             print "target 2: %d" %index
+#             continue
+#
+#         # else:
+#         #     text_part1.append(line)
+#
+# # API_3
+#         if APIname_3 in line:  # locate the API method
+#             flag = 3
+#             print "%s : %d" % (APIname_3, index)
+#             text_part1.append(line)
+#             continue
+#
+#         if flag == 3 and locals_org in line:  # change the locals
+#             text_part1.append(locals_new_3)
+#             print "locals: %d" % index
+#             if locals_org in targetStatement_3:  # locals is the place to insert
+#                 text_part1.append(text_toBeAdd_3)
+#                 continue
+#             continue
+#
+#         if flag == 3 and targetStatement_3 in line:  # the place to insert
+#             text_part1.append(line)
+#             text_part1.append(text_toBeAdd_3)
+#             flag = 0
+#             # flag_goPart2 = 1
+#             print "target 3: %d" % index
+#             continue
 
         else:
             text_part1.append(line)
@@ -246,16 +264,6 @@ def redo():
 
                 os.remove(APIfilePath_smali)
                 os.rename(APIfilePath_bak, APIfilePath_smali)
-                # cmd = "find %s -iname \"%s\" " % (decodeFilePath + file, APIfileName + "_bak")
-                # print cmd + "................."
-
-                # path = os.popen(cmd).readlines()
-                # print path
-                # if path:
-                #     APIfilePath_bak = path[0].strip()
-
-                # else:
-                #     print ".smali_bak No found! "
             else:
                 print ".smali or bak No found! "
 
